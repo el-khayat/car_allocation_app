@@ -8,7 +8,7 @@ library_to_install = "colorama"
 
 # Use subprocess to run the pip install command
 try:
-    subprocess.check_call(["pip", "install", library_to_install])
+    subprocess.check_call(["python", "-m", "pip", "install", library_to_install])
 except subprocess.CalledProcessError:
     print(f"Failed to install {library_to_install}.")
 from colorama import Fore, Style, init
