@@ -32,6 +32,8 @@ The project is structured as follows:
 
 ### Usage
 
+   pip install colorama
+   
    python script_sqlite3.py
 
             the system will ask you if you want to manage the clients, cars or allocation information

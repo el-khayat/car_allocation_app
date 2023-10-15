@@ -27,6 +27,11 @@ def print_success(message):
     print(f"{Fore.GREEN}{Style.BRIGHT}{message}{Style.RESET_ALL}")
 
 
+def print_info(message):
+    BLUE = f"\033[38;2;179;237;245m"
+    print(f"{BLUE}{Style.BRIGHT}{message}{Style.RESET_ALL}")
+
+
 # ------------------------- Defining the class Client ------------------------ #
 class Client:
     def __init__(self, client_id, full_name, address, phone, email, cin):
@@ -314,13 +319,13 @@ class Allocation:
 # ---------------------------------------define the test method to cars-----------------------------------
 def test_car():
     while True:
-        print("Choose an operation:")
-        print("1. Save a car")
-        print("2. Update a car")
-        print("3. Delete a car")
-        print("4. Get all cars")
-        print("5. Get one car by ID")
-        print("6. Go back to the main menu 🔙")
+        print_success("Choose an operation:")
+        print_info("1. Save a car")
+        print_info("2. Update a car")
+        print_info("3. Delete a car")
+        print_info("4. Get all cars")
+        print_info("5. Get one car by ID")
+        print_error("6. Go back to the main menu 🔙")
 
         choice = input("Enter your choice (1-6): ")
         os.system("cls")
@@ -340,17 +345,17 @@ def test_car():
                 car.model = input("Enter the new model ")
                 car.nbr_places = input("Enter the new nbr places ")
                 car.update_file()
-                print(f"Car with ID {car_id} updated successfully.")
+                print_success(f"Car with ID {car_id} updated successfully.")
             else:
-                print("Car not found.")
+                print_error("Car not found.")
         elif choice == "3":
             car_id = int(input("Enter the car ID you want to delete: "))
             car = Car.get_one_file(car_id)
             if car:
                 Car.delete_file(car.id)
-                print(f"Car with ID {car_id} deleted successfully.")
+                print_success(f"Car with ID {car_id} deleted successfully.")
             else:
-                print("Car not found.")
+                print_error("Car not found.")
         elif choice == "4":
             cars = Car.get_all_file()
             for car in cars:
@@ -363,15 +368,14 @@ def test_car():
             if car:
                 car.display_info()
             else:
-                print("Car not found.")
+                print_error("Car not found.")
             input("Press enter to return to the menu.")
             os.system("cls")
         elif choice == "6":
-            print("Goodbye!")
             break
         else:
-            print("Invalid choice. Please enter a valid option (1-6).")
-        time.sleep(0.5)
+            print_error("Invalid choice. Please enter a valid option (1-6).")
+        time.sleep(1)
         os.system("cls")
 
 
@@ -381,12 +385,12 @@ def test_car():
 def test_client():
     while True:
         print("Choose an operation:")
-        print("1. Save a client")
-        print("2. Update a client")
-        print("3. Delete a client")
-        print("4. Get all clients")
-        print("5. Get one client by ID")
-        print("6. Go back to the main menu 🔙 ")
+        print_info("1. Save a client")
+        print_info("2. Update a client")
+        print_info("3. Delete a client")
+        print_info("4. Get all clients")
+        print_info("5. Get one client by ID")
+        print_error("6. Go back to the main menu 🔙 ")
 
         choice = input("Enter your choice (1-6): ")
         os.system("cls")
@@ -400,7 +404,7 @@ def test_client():
                 random.randint(1000, 100000), full_name, address, phone, email, cin
             )
             client.save_file()
-            print("Client saved successfully.")
+            print_success("Client saved successfully.")
         elif choice == "2":
             client_id = int(input("Enter the client ID you want to update: "))
             updated_client = Client.get_one_file(client_id)
@@ -411,9 +415,9 @@ def test_client():
                 updated_client.email = input("Enter the new email: ")
                 updated_client.cin = input("Enter the new CIN: ")
                 updated_client.update_file()
-                print("Client updated successfully.")
+                print_success("Client updated successfully.")
             else:
-                print("Client not found.")
+                print_error("Client not found.")
         elif choice == "3":
             client_id = int(input("Enter the client ID you want to delete: "))
             Client.delete_file(client_id)
@@ -430,28 +434,27 @@ def test_client():
             if client:
                 client.display_info()
             else:
-                print("Client not found.")
+                print_error("Client not found.")
             input("Press any key to return to the menu.")
             os.system("cls")
         elif choice == "6":
-            print("Goodbye!")
             break
         else:
-            print("Invalid choice. Please enter a valid option (1-6).")
-        time.sleep(0.5)
+            print_error("Invalid choice. Please enter a valid option (1-6).")
+        time.sleep(1)
         os.system("cls")
 
 
 # ---------------------------------------------------------------------------------------------------
 def test_allocation():
     while True:
-        print("\n Allocation Management :")
-        print("1. Create a new allocation")
-        print("2. Update an allocation")
-        print("3. Delete an allocation")
-        print("4. View all allocations")
-        print("5. View allocation by ID")
-        print("6. Go back to the main menu 🔙")
+        print("\n Allocation Management :\n\n")
+        print_info("1. Create a new allocation")
+        print_info("2. Update an allocation")
+        print_info("3. Delete an allocation")
+        print_info("4. View all allocations")
+        print_info("5. View allocation by ID")
+        print_error("6. Go back to the main menu 🔙")
 
         choice = input("Enter your choice (1/2/3/4/5/6): ")
         time.sleep(1)
@@ -471,10 +474,9 @@ def test_allocation():
             input("Press enter to return to the menu.")
             os.system("cls")
         elif choice == "6":
-            print("Goodbye!")
             break
         else:
-            print("Invalid choice. Please enter a valid option.")
+            print_error("Invalid choice. Please enter a valid option.")
         time.sleep(1)
         os.system("cls")
 
@@ -495,7 +497,7 @@ def create_allocation():
             car_id,
         )
         new_allocation.save_file()
-        print("Allocation created successfully.")
+        print_success("Allocation created successfully.")
     except Exception as e:
         print(f"Error: {e}")
 
@@ -536,11 +538,11 @@ def update_allocation():
                 allocation.car_id = int(new_car_id)
 
             allocation.update_file()
-            print("Allocation updated successfully.")
+            print_success("Allocation updated successfully.")
         except Exception as e:
-            print(f"Error: {e}")
+            print_error(f"Error: {e}")
     else:
-        print("Allocation not found.")
+        print_error("Allocation not found.")
 
 
 def delete_allocation():
@@ -548,9 +550,9 @@ def delete_allocation():
     allocation = Allocation.get_allocation_by_id_file(allocation_id)
     if allocation is not None:
         Allocation.delete_file(allocation_id)
-        print("Allocation deleted.")
+        print_success("Allocation deleted.")
     else:
-        print("Allocation not found.")
+        print_error("Allocation not found.")
 
 
 def view_all_allocations():
@@ -561,7 +563,7 @@ def view_all_allocations():
                 f"ID: {allocation.id}, Date: {allocation.date}, Price: {allocation.price}, Days: {allocation.nbr_days}, Client ID: {allocation.client_id}, Car ID: {allocation.car_id}"
             )
     else:
-        print("No allocations found.")
+        print_error("No allocations found.")
 
 
 def view_allocation_by_id():
@@ -572,7 +574,7 @@ def view_allocation_by_id():
             f"ID: {allocation.id}, Date: {allocation.date}, Price: {allocation.price}, Days: {allocation.nbr_days}, Client ID: {allocation.client_id}, Car ID: {allocation.car_id}"
         )
     else:
-        print("Allocation not found.")
+        print_error("Allocation not found.")
 
     ########################################################
 
@@ -601,9 +603,9 @@ def main_test():
         print()
         print("Choose an operation:                      ")
         print()
-        print_success("1. Manage your  cars")
-        print_success("2. Manage your clients")
-        print_success("3. Manage your allocations")
+        print_info("1. Manage your  cars")
+        print_info("2. Manage your clients")
+        print_info("3. Manage your allocations")
 
         print_error("4. Quit")
 

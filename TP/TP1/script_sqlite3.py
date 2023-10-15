@@ -1,6 +1,36 @@
 import os
 import sqlite3
 import time
+import random
+import subprocess
+
+# Specify the library you want to install
+library_to_install = "colorama"
+
+# Use subprocess to run the pip install command
+try:
+    subprocess.check_call(["python", "-m", "pip", "install", library_to_install])
+except subprocess.CalledProcessError:
+    print(f"Failed to install {library_to_install}.")
+from colorama import Fore, Style, init
+
+init(autoreset=True)
+
+# Log colored text
+
+
+# Initialize colorama
+def print_error(message):
+    print(f"{Fore.RED}{Style.BRIGHT}{message}{Style.RESET_ALL}")
+
+
+def print_success(message):
+    print(f"{Fore.GREEN}{Style.BRIGHT}{message}{Style.RESET_ALL}")
+
+
+def print_info(message):
+    BLUE = f"\033[38;2;179;237;245m"
+    print(f"{BLUE}{Style.BRIGHT}{message}{Style.RESET_ALL}")
 
 
 # ------------------------- Defining the class Client ------------------------ #
@@ -255,12 +285,14 @@ class Allocation:
 def test_car():
     while True:
         print("Choose an operation:")
-        print("1. Save a car")
-        print("2. Update a car")
-        print("3. Delete a car")
-        print("4. Get all cars")
-        print("5. Get one car by ID")
-        print("6. Go back to the main menu 🔙")
+        print()
+        print()
+        print_info("1. Save a car")
+        print_info("2. Update a car")
+        print_info("3. Delete a car")
+        print_info("4. Get all cars")
+        print_info("5. Get one car by ID")
+        print_error("6. Go back to the main menu 🔙")
 
         choice = input("Enter your choice (1-6): ")
         os.system("cls")
@@ -271,6 +303,7 @@ def test_car():
             nbr = input("Enter the car numbers of places: ")
             car = Car(None, name, model, price, True, nbr)
             car.save()
+            print_success("Car saved successfully.")
         elif choice == "2":
             car_id = int(input("Enter the car ID you want to update: "))
             car = Car.get_one(car_id)
@@ -280,17 +313,17 @@ def test_car():
                 car.model = input("Enter the new model ")
                 car.nbr_places = input("Enter the new nbr places ")
                 car.update()
-                print(f"Car with ID {car_id} updated successfully.")
+                print_success(f"Car with ID {car_id} updated successfully.")
             else:
-                print("Car not found.")
+                print_error("Car not found.")
         elif choice == "3":
             car_id = int(input("Enter the car ID you want to delete: "))
             car = Car.get_one(car_id)
             if car:
                 car.delete()
-                print(f"Car with ID {car_id} deleted successfully.")
+                print_success(f"Car with ID {car_id} deleted successfully.")
             else:
-                print("Car not found.")
+                print_error("Car not found.")
         elif choice == "4":
             cars = Car.get_all()
             for car in cars:
@@ -303,14 +336,14 @@ def test_car():
             if car:
                 car.display_info()
             else:
-                print("Car not found.")
+                print_error("Car not found.")
             input("Press enter to return to the menu.")
             os.system("cls")
         elif choice == "6":
             print("Goodbye!")
             break
         else:
-            print("Invalid choice. Please enter a valid option (1-6).")
+            print_error("Invalid choice. Please enter a valid option (1-6).")
         time.sleep(0.5)
         os.system("cls")
 
@@ -321,12 +354,14 @@ def test_car():
 def test_client():
     while True:
         print("Choose an operation:")
-        print("1. Save a client")
-        print("2. Update a client")
-        print("3. Delete a client")
-        print("4. Get all clients")
-        print("5. Get one client by ID")
-        print("6. Go back to the main menu 🔙 ")
+        print()
+        print()
+        print_info("1. Save a client")
+        print_info("2. Update a client")
+        print_info("3. Delete a client")
+        print_info("4. Get all clients")
+        print_info("5. Get one client by ID")
+        print_error("6. Go back to the main menu 🔙 ")
 
         choice = input("Enter your choice (1-6): ")
         os.system("cls")
@@ -338,7 +373,7 @@ def test_client():
             cin = input("Enter client CIN: ")
             client = Client(None, full_name, address, phone, email, cin)
             client.save()
-            print("Client saved successfully.")
+            print_success("Client saved successfully.")
         elif choice == "2":
             client_id = int(input("Enter the client ID you want to update: "))
             updated_client = Client.get_one(client_id)
@@ -349,13 +384,13 @@ def test_client():
                 updated_client.email = input("Enter the new email: ")
                 updated_client.cin = input("Enter the new CIN: ")
                 updated_client.update()
-                print("Client updated successfully.")
+                print_success("Client updated successfully.")
             else:
-                print("Client not found.")
+                print_error("Client not found.")
         elif choice == "3":
             client_id = int(input("Enter the client ID you want to delete: "))
             Client.delete(client_id)
-            print("Client deleted successfully.")
+            print_success("Client deleted successfully.")
         elif choice == "4":
             clients = Client.get_all()
             for client in clients:
@@ -368,28 +403,29 @@ def test_client():
             if client:
                 client.display_info()
             else:
-                print("Client not found.")
+                print_error("Client not found.")
             input("Press enter to return to the menu.")
             os.system("cls")
         elif choice == "6":
-            print("Goodbye!")
             break
         else:
             print("Invalid choice. Please enter a valid option (1-6).")
-        time.sleep(0.5)
+        time.sleep(1)
         os.system("cls")
 
 
 # ---------------------------------------------------------------------------------------------------
 def test_allocation():
     while True:
-        print("\n Allocation Management :")
-        print("1. Create a new allocation")
-        print("2. Update an allocation")
-        print("3. Delete an allocation")
-        print("4. View all allocations")
-        print("5. View allocation by ID")
-        print("6. Go back to the main menu 🔙")
+        print_info("\n Allocation Management :")
+        print()
+        print()
+        print_info("1. Create a new allocation")
+        print_info("2. Update an allocation")
+        print_info("3. Delete an allocation")
+        print_info("4. View all allocations")
+        print_info("5. View allocation by ID")
+        print_error("6. Go back to the main menu 🔙")
 
         choice = input("Enter your choice (1/2/3/4/5/6): ")
         time.sleep(1)
@@ -409,10 +445,9 @@ def test_allocation():
             input("Press enter to return to the menu.")
             os.system("cls")
         elif choice == "6":
-            print("Goodbye!")
             break
         else:
-            print("Invalid choice. Please enter a valid option.")
+            print_error("Invalid choice. Please enter a valid option.")
         time.sleep(1)
         os.system("cls")
 
@@ -433,7 +468,7 @@ def create_allocation():
             car_id,
         )
         new_allocation.save()
-        print("Allocation created successfully.")
+        print_success("Allocation created successfully.")
     except Exception as e:
         print(f"Error: {e}")
 
@@ -475,11 +510,11 @@ def update_allocation():
                 allocation.car_id = int(new_car_id)
 
             allocation.update()
-            print("Allocation updated successfully.")
+            print_success("Allocation updated successfully.")
         except Exception as e:
-            print(f"Error: {e}")
+            print_error(f"Error: {e}")
     else:
-        print("Allocation not found.")
+        print_error("Allocation not found.")
 
 
 def delete_allocation():
@@ -487,9 +522,9 @@ def delete_allocation():
     allocation = Allocation.get_allocation_by_id(allocation_id)
     if allocation is not None:
         Allocation.delete(allocation_id)
-        print("Allocation deleted.")
+        print_success("Allocation deleted.")
     else:
-        print("Allocation not found.")
+        print_error("Allocation not found.")
 
 
 def view_all_allocations():
@@ -500,7 +535,7 @@ def view_all_allocations():
                 f"ID: {allocation.id}, Date: {allocation.date}, Price: {allocation.price}, Days: {allocation.nbr_days}, Client ID: {allocation.client_id}, Car ID: {allocation.car_id}"
             )
     else:
-        print("No allocations found.")
+        print_error("No allocations found.")
 
 
 def view_allocation_by_id():
@@ -511,7 +546,7 @@ def view_allocation_by_id():
             f"ID: {allocation.id}, Date: {allocation.date}, Price: {allocation.price}, Days: {allocation.nbr_days}, Client ID: {allocation.client_id}, Car ID: {allocation.car_id}"
         )
     else:
-        print("Allocation not found.")
+        print_error("Allocation not found.")
 
     ########################################################
 
@@ -523,7 +558,7 @@ def view_allocation_by_id():
 
 def main_test():
     #####################################################
-    print(f"Craeting ##########.")
+    print(f"Craeting databases ##########.")
     time.sleep(1)
     os.system("cls")
     # Create an SQLite database
@@ -570,18 +605,19 @@ def main_test():
 
     while True:
         print()
-        print("#### Welcome to Car allocation managment ####")
+        print_info("#### Welcome to Car allocation managment ####")
         time.sleep(1)
         os.system("cls")
         print()
-        print("+-------------------------------------------+")
-        print("Choose an operation:")
+        print_error("+-------------------------------------------+")
+        print_error("|     Choose an operation:                  |")
+        print_error("+-------------------------------------------+")
 
-        print("1. Manage your  cars")
-        print("2. Manage your clients")
-        print("3. Manage your allocations")
+        print_info("1. Manage your  cars")
+        print_info("2. Manage your clients")
+        print_info("3. Manage your allocations")
 
-        print("4. Quit")
+        print_error("4. Quit")
 
         choice = input("Enter your choice (1-4): ")
         os.system("cls")
