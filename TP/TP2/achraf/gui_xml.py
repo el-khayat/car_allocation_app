@@ -99,10 +99,11 @@ class AllocationGUI:
                 scrollbar.config(command=listbox.yview)
 
 
-    xml_file = "TP/TP2/achraf/allocations.xml"
+
     @staticmethod
     def read_xml_file(xml_file):
         # Function to read the XML file and extract allocations
+        xml_file = "TP/TP2/achraf/allocations.xml"
         allocations = []
         tree = ET.parse(xml_file)
         root = tree.getroot()
