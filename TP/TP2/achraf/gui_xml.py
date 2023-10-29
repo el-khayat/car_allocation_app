@@ -32,8 +32,18 @@ class AllocationGUI:
         create_button = tk.Button(self.root, text="Create Allocation", command=self.create_allocation)
         create_button.grid(row=1, column=len(labels))  # Place in the column after "Car ID"
 
+        # Create and place an Entry widget for allocation ID
+        self.id_input = tk.Entry(root)
+        self.id_input.grid(row=2, column=1, padx=5, pady=5)
+        
+       # Create and place the "Update Allocation" button
         update_button = tk.Button(self.root, text="Update Allocation", command=self.update_allocation)
-        update_button.grid(row=3, columnspan=len(labels))
+        update_button.grid(row=2, column=0, padx=5, pady=5)
+
+
+        self.text_input = tk.Entry(root)
+        self.text_input.grid(row=4, column=0, padx=5, pady=5)
+
 
         delete_button = tk.Button(self.root, text="Delete Allocation", command=self.delete_allocation)
         delete_button.grid(row=4, columnspan=len(labels))
@@ -79,12 +89,26 @@ class AllocationGUI:
         pass
         
     def delete_allocation(self):
-        # Implement the delete logic
-        pass
+        allocation_id = self.text_input.get()
+        if not allocation_id:
+            return
+
+        tree = ET.parse("TP/TP2/achraf/allocations.xml")
+        root = tree.getroot()
+
+        for allocation in root.findall("allocation"):
+            if allocation.find("id").text == allocation_id:
+                root.remove(allocation)
+
+        tree.write("TP/TP2/achraf/allocations.xml")
+
+        # Refresh the listbox to display the updated data
+        self.display_allocation_list()
+
 
     def display_allocation_list(self):
             # Function to display XML data in a listbox
-            allocations = self.read_xml_file("allocations.xml")  # Provide the path to your XML file
+            allocations = self.read_xml_file("TP/TP2/achraf/allocations.xml")  # Provide the path to your XML file
             if allocations:
                 listbox = tk.Listbox(self.root)
                 listbox.grid(row=5, column=0, columnspan=5, sticky='nsew')
