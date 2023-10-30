@@ -84,9 +84,7 @@ class AllocationGUI:
         self.input_field = tk.Entry(self.root)
         self.input_field.grid(row=2, column=0)
 
-        # Create an input field for the allocation ID
-        self.input_field2 = tk.Entry(self.root)
-        self.input_field2.grid(row=3, column=0)
+
 
         # Change the "Update Allocation" button to fetch and populate the allocation
         update_button1 = tk.Button(self.root, text="enter the id for the update", command=self.fetch_and_populate_allocation)
@@ -97,10 +95,10 @@ class AllocationGUI:
 
         # Inside the __init__ method of AllocationGUI class, after creating other fields
         self.delete_id_entry = tk.Entry(self.root)
-        self.delete_id_entry.grid(row=4, column=1)  # Adjust the row and column as needed
+        self.delete_id_entry.grid(row=4, column=0)  # Adjust the row and column as needed
 
         delete_button = tk.Button(self.root, text="Delete Allocation", command=self.delete_allocation)
-        delete_button.grid(row=4, column=2)  # Adjust the row and column as needed
+        delete_button.grid(row=4, column=len(labels))  # Adjust the row and column as needed
 
     def fetch_and_populate_allocation(self):
             allocation_id = self.input_field.get()
