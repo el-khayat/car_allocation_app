@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>777</width>
+    <height>331</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>10</y>
+     <width>741</width>
+     <height>291</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="allocation_part">
+    <attribute name="title">
+     <string>Tab 1</string>
+    </attribute>
+    <layout class="QGridLayout" name="gridLayout_3">
+     <item row="0" column="0">
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="1">
+        <widget class="QPushButton" name="Button_create_allocation">
+         <property name="text">
+          <string>Create allocation</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="1" column="3">
+          <widget class="QLineEdit" name="line_client_id"/>
+         </item>
+         <item row="1" column="4">
+          <widget class="QLineEdit" name="line_car_id"/>
+         </item>
+         <item row="1" column="2">
+          <widget class="QLineEdit" name="line_days"/>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="line_price"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLineEdit" name="line_date"/>
+         </item>
+         <item row="0" column="0" colspan="5">
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <property name="spacing">
+            <number>57</number>
+           </property>
+           <property name="sizeConstraint">
+            <enum>QLayout::SetDefaultConstraint</enum>
+           </property>
+           <property name="leftMargin">
+            <number>3</number>
+           </property>
+           <property name="topMargin">
+            <number>3</number>
+           </property>
+           <property name="rightMargin">
+            <number>11</number>
+           </property>
+           <property name="bottomMargin">
+            <number>9</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="Date">
+             <property name="text">
+              <string>Date :</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="Price">
+             <property name="text">
+              <string>Price :</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="Days">
+             <property name="text">
+              <string>Days :</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="Client_id">
+             <property name="text">
+              <string>Client id :</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="Car_id">
+             <property name="text">
+              <string>Car id :</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="0">
+      <widget class="QTableWidget" name="tableWidget"/>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="tab_2">
+    <attribute name="title">
+     <string>Tab 2</string>
+    </attribute>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
