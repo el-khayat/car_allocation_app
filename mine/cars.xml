@@ -1,0 +1,23 @@
+<cars>
+    <car id="1">
+        <name>BMW</name>
+        <price>300</price>
+        <model>X5</model>
+        <is_disponible>True</is_disponible>
+        <nbr_places>21</nbr_places>
+    </car>
+    <car id="2">
+        <name>dacia</name>
+        <price>200</price>
+        <model>X5</model>
+        <is_disponible>True</is_disponible>
+        <nbr_places>2</nbr_places>
+    </car>
+    <car id="3">
+        <name>Firari</name>
+        <price>200</price>
+        <model>X5</model>
+        <is_disponible>True</is_disponible>
+        <nbr_places>2</nbr_places>
+    </car>
+    </cars>
