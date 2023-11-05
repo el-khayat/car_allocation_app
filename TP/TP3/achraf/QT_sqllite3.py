@@ -56,9 +56,18 @@ class MyForm(QWidget, Ui_Form):
     def __init__(self):
         super().__init__()
         self.setupUi(self)  # Initialize the UI
-
         # Connect the "Create Allocation" button to the create_allocation method
         self.Button_create_allocation.clicked.connect(self.create_allocation)
+        # Connect the "Update Allocation" button to the update_allocation method
+        self.Button_update_allocation.clicked.connect(self.update_allocation)
+
+        # Initialize a variable to store the selected allocation ID for updating
+        self.selected_allocation_id = None
+
+        self.Button_delete_allocation.clicked.connect(self.delete_allocation)
+
+        # Populate the table with data
+        self.populate_table()
 
     def create_allocation(self):
         # Get data from input fields
@@ -73,55 +82,77 @@ class MyForm(QWidget, Ui_Form):
             QMessageBox.critical(self, "Error", "All fields are required.")
             return
 
-        # Create an Allocation object and save it
-        allocation = Allocation(None, date, price, days, client_id, car_id)
-        allocation.save()
+        # Check if an allocation ID is selected for updating
+        if self.selected_allocation_id is not None:
+            # Update the existing allocation
+            allocation = Allocation(self.selected_allocation_id, date, price, days, client_id, car_id)
+            allocation.update()
+            # Clear the selected allocation ID
+            self.selected_allocation_id = None
+        else:
+            # Create a new Allocation object and save it
+            allocation = Allocation(None, date, price, days, client_id, car_id)
+            allocation.save()
 
-        # Clear input fields after saving
+        # Clear input fields after saving or updating
         self.line_date.clear()
         self.line_price.clear()
         self.line_days.clear()
         self.line_client_id.clear()
         self.line_car_id.clear()
 
+        # Populate the table with updated data
+        self.populate_table()
+
 
         
-    @pyqtSlot(QTableWidgetItem)
-    def update_allocation(self, item):
-        row = item.row()
-        col = item.column()
-        new_value = item.text()
-
-        if col == 0:  # Assuming the first column is "id" and should not be changed
+    def update_allocation(self):
+        # Check if a row is selected in the table
+        selected_row = self.tableWidget.currentRow()
+        if selected_row == -1:
+            QMessageBox.critical(self, "Error", "Please select a row to update.")
             return
 
-        allocation_id = self.tableWidget.item(row, 0).text()  # Get the allocation_id from the first column
+        # Get the data from the selected row
+        allocation_id = self.tableWidget.item(selected_row, 0).text()
+        date = self.tableWidget.item(selected_row, 1).text()
+        price = self.tableWidget.item(selected_row, 2).text()
+        days = self.tableWidget.item(selected_row, 3).text()
+        client_id = self.tableWidget.item(selected_row, 4).text()
+        car_id = self.tableWidget.item(selected_row, 5).text()
 
-        try:
-            conn = sqlite3.connect("TP/TP3/achraf/car_allocation.db")
-            cursor = conn.cursor()
+        # Update the input fields with the selected data for editing
+        self.line_date.setText(date)
+        self.line_price.setText(price)
+        self.line_days.setText(days)
+        self.line_client_id.setText(client_id)
+        self.line_car_id.setText(car_id)
 
-            if col == 1:
-                # Update the 'date' column
-                cursor.execute("UPDATE allocations SET date=? WHERE id=?", (new_value, allocation_id))
-            elif col == 2:
-                # Update the 'price' column
-                cursor.execute("UPDATE allocations SET price=? WHERE id=?", (new_value, allocation_id))
-            elif col == 3:
-                # Update the 'nbr_days' column
-                cursor.execute("UPDATE allocations SET nbr_days=? WHERE id=?", (new_value, allocation_id))
-            elif col == 4:
-                # Update the 'client_id' column
-                cursor.execute("UPDATE allocations SET client_id=? WHERE id=?", (new_value, allocation_id))
-            elif col == 5:
-                # Update the 'car_id' column
-                cursor.execute("UPDATE allocations SET car_id=? WHERE id=?", (new_value, allocation_id))
+        # Set the selected allocation ID for updating
+        self.selected_allocation_id = allocation_id
 
-            conn.commit()
-            conn.close()
 
-        except sqlite3.Error as e:
-            self.show_database_error(str(e))
+
+    def delete_allocation(self):
+        # Check if a row is selected in the table
+        selected_row = self.tableWidget.currentRow()
+        if selected_row == -1:
+            QMessageBox.critical(self, "Error", "Please select a row to delete.")
+            return
+
+        # Get the allocation ID from the selected row
+        allocation_id = int(self.tableWidget.item(selected_row, 0).text())
+
+        # Ask for confirmation before deleting
+        reply = QMessageBox.question(self, "Delete Allocation", "Are you sure you want to delete this allocation?", QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        if reply == QMessageBox.StandardButton.Yes:
+            # Delete the allocation from the database
+            allocation = Allocation(allocation_id, None, None, None, None, None)
+            allocation.delete()
+
+            # Remove the selected row from the table
+            self.tableWidget.removeRow(selected_row)
+       
 
     def populate_table(self):
             try:
@@ -148,5 +179,6 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     form = MyForm()
     form.show()
-    form.populate_table()  # Call the populate_table method to display data
+    form.populate_table()
+    form.update_allocation
     sys.exit(app.exec())
