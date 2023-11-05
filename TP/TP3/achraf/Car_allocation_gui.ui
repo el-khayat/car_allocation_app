@@ -30,32 +30,39 @@
      <string>Tab 1</string>
     </attribute>
     <layout class="QGridLayout" name="gridLayout_3">
+     <item row="1" column="0">
+      <widget class="QTableWidget" name="tableWidget">
+       <column>
+        <property name="text">
+         <string>DATE</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>PRICE</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>DAYS</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>CLIENT_ID</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>CAR_ID</string>
+        </property>
+       </column>
+      </widget>
+     </item>
      <item row="0" column="0">
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="1">
-        <widget class="QPushButton" name="Button_create_allocation">
-         <property name="text">
-          <string>Create allocation</string>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="0">
         <layout class="QGridLayout" name="gridLayout">
-         <item row="1" column="3">
-          <widget class="QLineEdit" name="line_client_id"/>
-         </item>
-         <item row="1" column="4">
-          <widget class="QLineEdit" name="line_car_id"/>
-         </item>
-         <item row="1" column="2">
-          <widget class="QLineEdit" name="line_days"/>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="line_price"/>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLineEdit" name="line_date"/>
-         </item>
          <item row="0" column="0" colspan="5">
           <layout class="QHBoxLayout" name="horizontalLayout">
            <property name="spacing">
@@ -113,12 +120,31 @@
            </item>
           </layout>
          </item>
+         <item row="1" column="3">
+          <widget class="QLineEdit" name="line_client_id"/>
+         </item>
+         <item row="1" column="4">
+          <widget class="QLineEdit" name="line_car_id"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLineEdit" name="line_date"/>
+         </item>
+         <item row="1" column="2">
+          <widget class="QLineEdit" name="line_days"/>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="line_price"/>
+         </item>
         </layout>
        </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="Button_create_allocation">
+         <property name="text">
+          <string>Create allocation</string>
+         </property>
+        </widget>
+       </item>
       </layout>
-     </item>
-     <item row="1" column="0">
-      <widget class="QTableWidget" name="tableWidget"/>
      </item>
     </layout>
    </widget>
