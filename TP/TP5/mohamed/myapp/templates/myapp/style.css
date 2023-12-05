@@ -1,0 +1,9 @@
+.text-align-center {
+    text-align: center !important;
+}
+.not-available{
+    color: red;
+}
+.available{
+    color: green;
+}
