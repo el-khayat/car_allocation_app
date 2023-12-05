@@ -148,9 +148,25 @@ class MyForm(wx.Frame):
         self.line_client_id.Clear()
         self.line_car_id.Clear()
 
-        # Populate the table with updated data
-        self.populate_table()
+            # Fetch the latest added allocation from the database
+        try:
+            conn = sqlite3.connect("TP/TP4/achraf/car_allocation.db")
+            cursor = conn.cursor()
+            cursor.execute("SELECT id, date, price, nbr_days, client_id, car_id FROM allocations ORDER BY id DESC LIMIT 1")
+            new_allocation_data = cursor.fetchone()
+            conn.close()
 
+            # Append the new allocation data to the table
+            if new_allocation_data:
+                row_position = self.tableWidget.GetNumberRows()
+                self.tableWidget.AppendRows(1)
+                for col, value in enumerate(new_allocation_data):
+                    self.tableWidget.SetCellValue(row_position, col, str(value))
+
+        except sqlite3.Error as e:
+            dlg = wx.MessageDialog(None, str(e), "Database Error", wx.OK | wx.ICON_ERROR)
+            dlg.ShowModal()
+            dlg.Destroy()
 
     def update_allocation(self, event):
         selected_row = self.tableWidget.GetSelectedRows()
